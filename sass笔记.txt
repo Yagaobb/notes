@@ -1,0 +1,340 @@
+在线sass编辑器:https://www.sassmeister.com/
+
+使用 Sass 进行开发，不是直接通过“<link>”引用“.scss”或“.sass”文件
+在项目中还是引用“.css”文件，Sass 只不过是做为一个预处理工具，提前帮你做事情，只有你需要时候，他才有效果。
+这样一来，也就有了这章需要介绍的内容—— Sass 的编译。因为 Sass 开发之后，要让 Web 页面能调用 Sass 写好的东西，就得有这么一个过程，这个过程就称之为 Sass 编译过程。Sass 的编译有多种方法：
+命令编译
+GUI工具编译
+自动化编译
+
+
+一、sass、scss文件编译成css文件？
+
+法1:命令编译（分2种：1次编译、实时自动检测代码变化，都是sass命令编译，使用冒号分开两个文件名或项目文件夹名）
+（1）只能一次性编译：
+单文件编译：(例：将style.scss编译成style.css)
+sass <要编译的Sass文件路径>/style.scss:<要输出CSS文件路径>/style.css
+多文件编译：(命令表示将项目中“sass”文件夹中所有“.scss”(“.sass”)文件编译成“.css”文件，并且将这些 CSS 文件都放在项目中“css”文件夹中。)
+sass sass/:css/
+（2）.在编译 Sass 时，开启“watch”功能，这样只要你的代码进行任保修改，都能自动监测到代码的变化，并且给你直接编译出来：
+sass --watch <要编译的Sass文件路径>/style.scss:<要输出CSS文件路径>/style.css
+
+法2：对于 GUI 界面编译工具，目前较为流行的主要有：
+Koala (http://koala-app.com/)
+Compass.app（http://compass.kkbox.com/）
+Scout（http://mhs.github.io/scout-app/）
+CodeKit（https://incident57.com/codekit/index.html）
+Prepros（https://prepros.io/）
+
+法3：自动化编译
+Grunt 和 Gulp
+
+[Sass]常见的编译错误
+在Sass的编译的过程中，是不是支持“GBK”编码的。所以在创建 Sass 文件时，就需要将文件编码设置为“utf-8”。
+另外一个错误就是路径中的中文字符引起的。建议在项目中文件命名或者文件目录命名不要使用中文字符。而至于人为失误造成的编译失败，在编译过程中都会有具体的说明，大家可以根据编译器提供的错误信息进行对应的修改。
+
+
+二、[Sass]嵌套输出方式（4种：nested，expanded,compact,compressed）
+例：sass:
+nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li { display: inline-block; }
+
+  a {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+}
+
+1.[Sass]嵌套输出方式 nested （['nestɪd] 嵌套的，v. 筑巢；嵌入（nest的过去分词）)
+在编译的时候带上参数“ --style nested”:
+sass --watch test.scss:test.css --style nested
+例子中的sass编译后css:
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+nav li {
+  display: inline-block; }
+nav a {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none; }
+
+2.[Sass]展开输出方式 expanded ([ɪk'spændɪd] 扩充的；展开的，vt. 扩大（expand的过去式）)
+在编译的时候带上参数“ --style expanded”: 
+sass --watch test.scss:test.css --style expanded
+这个输出的 CSS 样式风格和 nested 类似，只是大括号在另起一行
+例子中的sass编译后css:
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+nav li {
+  display: inline-block;
+}
+nav a {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+
+3.[Sass]紧凑输出方式 compact（[kəm'pækt]n. 合同，契约；小粉盒；adj. 紧凑的，紧密的；简洁的；vt. 使简洁；使紧密结合）
+在编译的时候带上参数“ --style compact”:
+sass --watch test.scss:test.css --style compact
+例子中的sass编译后css:
+nav ul { margin: 0; padding: 0; list-style: none; }
+nav li { display: inline-block; }
+nav a { display: block; padding: 6px 12px; text-decoration: none; }
+
+4.[Sass]压缩输出方式 compressed（[kəm'prest] adj. 被压缩的；扁平的）
+在编译的时候带上参数“ --style compressed”:
+sass --watch test.scss:test.css --style compressed
+压缩输出方式会去掉标准的 Sass 和 CSS 注释及空格。也就是压缩好的 CSS 代码样式风格：
+nav ul{margin:0;padding:0;list-style:none}nav li{display:inline-block}nav a{display:block;padding:6px 12px;text-decoration:none}
+
+
+三、Sass 的调试(结合chrome)
+只要使用的浏览器支持“sourcemap”功能即可。早一点的版本，需要在编译的时候添加“--sourcemap”  
+命令：sass --watch --scss --sourcemap style.scss:style.css
+gif查看步骤:http://img.mukewang.com/54f7b71d0001bb0b05050268.jpg
+在 Sass3.3 版本之上（我测试使用的版本是 3.4.7），不需要添加这个参数也可以：
+sass --watch style.scss:style.css
+在命令终端，你将看到一个信息：
+>>> Change detected to: style.scss
+  write style.css
+  write style.css.map
+这时你就可以像前面展示的 gif 图一样，调试你的 Sass 代码。
+
+
+四、[Sass]声明变量
+$width:30px;(普通变量)
+$:变量声明符 width:变量名称 30px:变量值
+$width:30px !default;(默认变量,默认变量的价值在进行组件化开发的时候会非常有用)
+如果值后面加上!default则表示默认值。
+sass 的默认变量一般是用来设置默认值，然后根据需求来覆盖的，覆盖的方式也很简单，只需要在默认变量[之前]重新声明下变量即可。
+$fontsize:12px;
+$fontsize:15px !default;
+body{
+   font-size:$fontsize;
+}
+编译后css:
+body{
+   font-size:12px;
+}
+
+Sass 的嵌套分为三种：选择器嵌套、属性嵌套、伪类嵌套
+1.选择器嵌套
+css:
+nav a {
+  color:red;
+}
+
+header nav a {
+  color:green;
+}
+
+sass:
+nav {
+  a {
+    color: red;
+
+    header & {
+      color:green;
+    }
+  }  
+}
+
+2.属性嵌套
+css:
+.box {
+    border-top: 1px solid red;
+    border-bottom: 1px solid green;
+}
+
+sass:
+.box {
+  border: {
+   top: 1px solid red;
+   bottom: 1px solid green;
+  }
+}
+
+3.伪类嵌套
+css:
+clearfix:before, .clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+  overflow: hidden;
+}
+
+sass:
+.clearfix{
+&:before,
+&:after {
+    content:"";
+    display: table;
+  }
+&:after {
+    clear:both;
+    overflow: hidden;
+  }
+}
+
+
+五、[Sass]混合宏-声明混合宏 @minxin
+其中 @mixin 是用来声明混合宏的关键词，有点类似 CSS 中的 @media、@font-face 一样。border-radius 是混合宏的名称。大括号里面是复用的样式代码。
+不带参数混合宏：
+@mixin border-radius{
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+带参数混合宏：
+除了声明一个不带参数的混合宏之外，还可以在定义混合宏时带有参数，如：
+@mixin border-radius($radius:5px){
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}
+
+[Sass]混合宏的参数--混合宏的不足
+混合宏在实际编码中给我们带来很多方便之处，特别是对于复用重复代码块。但其最大的不足之处是会生成冗余的代码块。比如在不同的地方调用一个相同的混合宏时。
+
+六、扩展/继承 @extend（提取公共）
+继承可以理解为不带参数的混合宏，而且，继承是联合声明，相对于不带参数的混合宏来说，不会产生样式代码块的冗余继承可以理解为不带参数的混合宏，而且，继承是联合声明，相对于不带参数的混合宏来说，不会产生样式代码块的冗余
+//SCSS
+.btn {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #f36;
+  color: #fff;
+  @extend .btn;
+}
+
+.btn-second {
+  background-color: orange;
+  color: #fff;
+  @extend .btn;
+}
+
+//CSS
+.btn, .btn-primary, .btn-second {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #f36;
+  color: #fff;
+}
+
+.btn-second {
+  background-clor: orange;
+  color: #fff;
+}
+
+
+七、占位符 %placeholder
+ass 中的占位符 %placeholder 功能是一个很强大，很实用的一个功能，这也是我非常喜欢的功能。他可以取代以前 CSS 中的基类造成的代码冗余的情形。因为 %placeholder 声明的代码，如果不被 @extend 调用的话，不会产生任何代码。来看一个演示：
+
+%mt5 {
+  margin-top: 5px;
+}
+%pt5{
+  padding-top: 5px;
+}
+这段代码没有被 @extend 调用，他并没有产生任何代码块，只是静静的躺在你的某个 SCSS 文件中。只有通过 @extend 调用才会产生代码：
+
+//SCSS
+%mt5 {
+  margin-top: 5px;
+}
+%pt5{
+  padding-top: 5px;
+}
+
+.btn {
+  @extend %mt5;
+  @extend %pt5;
+}
+
+.block {
+  @extend %mt5;
+
+  span {
+    @extend %pt5;
+  }
+}
+编译出来的CSS
+
+//CSS
+.btn, .block {
+  margin-top: 5px;
+}
+
+.btn, .block span {
+  padding-top: 5px;
+}
+从编译出来的 CSS 代码可以看出，通过 @extend 调用的占位符，编译出来的代码会将相同的代码合并在一起。这也是我们希望看到的效果，也让你的代码变得更为干净。
+
+
+八、[Sass]混合宏 VS 继承 VS 占位符
+初学者都常常纠结于这个问题“什么时候用混合宏，什么时候用继承，什么时候使用占位符？”其实他们各有各的优点与缺点，先来看看他们使用效果：
+a) Sass 中的混合宏使用
+总结：编译出来的 CSS 清晰告诉了大家，他不会自动合并相同的样式代码，如果在样式文件中调用同一个混合宏，会产生多个对应的样式代码，造成代码的冗余，这也是 CSSer 无法忍受的一件事情。不过他并不是一无事处，他可以传参数。
+个人建议：如果你的代码块中涉及到变量，建议使用混合宏来创建相同的代码块。
+
+b) Sass 中继承
+同样的，将上面代码中的混合宏，使用类名来表示，然后通过继承来调用：
+总结：使用继承后，编译出来的 CSS 会将使用继承的代码块合并到一起，通过组合选择器的方式向大家展现，比如 .mt, .block, .block span, .header, .header span。这样编译出来的代码相对于混合宏来说要干净的多，也是 CSSer 期望看到。但是他不能传变量参数。
+个人建议：如果你的代码块不需要专任何变量参数，而且有一个基类已在文件中存在，那么建议使用 Sass 的继承。
+
+c) 占位符
+最后来看占位符，将上面代码中的基类 .mt 换成 Sass 的占位符格式：
+总结：编译出来的 CSS 代码和使用继承基本上是相同，只是不会在代码中生成占位符 mt 的选择器。那么占位符和继承的主要区别的，“占位符是独立定义，不调用的时候是不会在 CSS 中产生任何代码；继承是首先有一个基类存在，不管调用与不调用，基类的样式都将会出现在编译出来的 CSS 代码中。”
+
+
+十、[Sass]插值#{}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
