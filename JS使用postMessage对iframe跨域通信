@@ -1,3 +1,5 @@
+Javascript使用postMessage对iframe跨域通信
+
 A.html
 <input id="sendText" type="text">
 <div id="sendBtn" onclick="test()">发送</div>
@@ -53,3 +55,7 @@ B.html
     }
   });
 </script>
+
+个人理解：
+主要通过postMessage方法发送消息，通过addEventListener去监听message，进行接收消息
+postMessage() 方法用于安全地实现跨源通信。
