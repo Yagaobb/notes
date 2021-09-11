@@ -1,13 +1,10 @@
 Javascript使用postMessage对iframe跨域通信
-
+```
 A.html
 <input id="sendText" type="text">
 <div id="sendBtn" onclick="test()">发送</div>
 <iframe id="iframe" src="B.html"></iframe>
-
-```
-javascript
-<script>
+JS:
   var sendBtn = document.getElementById('sendBtn');
   var iframe = document.getElementById('iframe');
   // sendBtn.addEventListener('click', function (e) {})// 监听点击事件 addEventListener前面用getElementById获取id，$("#sendBtn")和document.getElementById('sendBtn')获取id，不一样
@@ -34,8 +31,8 @@ javascript
       console.log('未定义的消息：' + e.data.act);
     }
   }, false);
-</script>
-
+```
+```
 B.html
 <div>接收消息：</div>
 <div id="receive"></div>
@@ -56,8 +53,6 @@ B.html
       console.log('未定义的消息：' + e.data.act);
     }
   });
-</script>
-
 ```
 
 个人理解：
