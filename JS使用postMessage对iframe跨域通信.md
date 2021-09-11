@@ -5,7 +5,8 @@ A.html
 <div id="sendBtn" onclick="test()">发送</div>
 <iframe id="iframe" src="B.html"></iframe>
 
-```javascript
+```
+javascript
 <script>
   var sendBtn = document.getElementById('sendBtn');
   var iframe = document.getElementById('iframe');
@@ -56,6 +57,7 @@ B.html
     }
   });
 </script>
+
 ```
 
 个人理解：
