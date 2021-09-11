@@ -3,7 +3,7 @@ Javascript使用postMessage对iframe跨域通信
 A.html
 <input id="sendText" type="text">
 <div id="sendBtn" onclick="test()">发送</div>
-<iframe id="iframe" src="test.html"></iframe>
+<iframe id="iframe" src="B.html"></iframe>
 
 <script>
   var sendBtn = document.getElementById('sendBtn');
