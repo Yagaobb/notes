@@ -5,6 +5,7 @@ A.html
 <div id="sendBtn" onclick="test()">发送</div>
 <iframe id="iframe" src="B.html"></iframe>
 
+```javascript
 <script>
   var sendBtn = document.getElementById('sendBtn');
   var iframe = document.getElementById('iframe');
@@ -55,6 +56,7 @@ B.html
     }
   });
 </script>
+```
 
 个人理解：
 主要通过postMessage方法发送消息，通过addEventListener去监听message，进行接收消息
