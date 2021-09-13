@@ -1,4 +1,7 @@
 Javascript使用postMessage对iframe跨域通信
+页面a 用iframe 嵌入 页面b。
+
+
 ```
 A.html
 <input id="sendText" type="text">
@@ -60,3 +63,6 @@ B.html
 个人理解：
 主要通过postMessage方法发送消息，通过addEventListener去监听message，进行接收消息
 postMessage() 方法用于安全地实现跨源通信。
+注意点：
+父页面a 传数据时一定要在 子页面 addEventlistener 之后，否则子页面是接收不到数据的。所以我们在使用时，可以参考通信中的三次握手。 子页面addEventlistener 之后 ，采用 postmessage send 信息给父页面，告诉父页面，子页面已经准备好了，可以传数据了。如此避免数据丢失！！！
+
